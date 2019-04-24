@@ -1,5 +1,5 @@
 const body = document.querySelector("body");
-const IMG_NUMBER = 5;
+const IMG_NUMBER = 4;
 
 function genRandom(){
     const number = Math.floor(Math.random() * IMG_NUMBER);
