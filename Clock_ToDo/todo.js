@@ -4,30 +4,49 @@ const toDoForm = document.querySelector(".js-toDoform"),
 
 const TODOS_LS = "toDos";
 
+const toDos = [];
+
 function loadToDos(){
-    const toDos = localStorage.getItem(TODOS_LS);
-    if(toDos !== null){
-        handleSubmit(toDos)
+    const loadedToDos = localStorage.getItem(TODOS_LS);
+    if(loadedToDos !== null){
+        const parsedToDos = JSON.parse(loadedToDos);
+        parsedToDos.forEach(function(toDo){
+            paintToDos(toDo.text)
+        })
     }
 }
+
 function handleSubmit(event){
     event.preventDefault();
     const currentValue = toDoInput.value;
-    paintToDo(currentValue);
+    paintToDos(currentValue);
     toDoInput.value = ""
 }
 
-function paintToDo(text){
+function paintToDos(text){
     const li = document.createElement("li");
     const delBtn = document.createElement("button");
-    delBtn.innerText = "❌";
     const span = document.createElement("span");
+    const newId = toDos.length + 1;
+    delBtn.innerText = "❌";
     span.innerText = text;
-    li.appendChild(span);
     li.appendChild(delBtn);
+    li.appendChild(span);
+    li.id = newId;
     toDoList.appendChild(li);
+
+    const toDoObj = {
+        text: text,
+        id: newId
+    };
+    toDos.push(toDoObj);
+    saveToDos()
 }
 
+
+function saveToDos(){
+    localStorage.setItem(TODOS_LS, JSON.stringify(toDos));  // can only save string in local storage. change js object (toDos) to string
+}
 
 function init(){
     loadToDos();
