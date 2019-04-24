@@ -1,4 +1,4 @@
-const form = document.querySelector(".js-form"),
+const form = document.querySelector(".js-greetingform"),
     input = form.querySelector("input"),
     greeting = document.querySelector(".js-greetings");
 
